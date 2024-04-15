@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Календарь записи на прием</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 50%; /* Ширина таблицы составляет половину экрана */
+            margin: 0 auto; /* Центрируем таблицу по горизонтали */
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Календарь записи на прием</h1>
+    <a href="{% url 'master_list' %}" class="back-button">На главную страницу</a>
+    <table>
+        <tr>
+            <th>Дата</th>
+            <th>Начальное время</th>
+            <th>Конечное время</th>
+            <th>ID пользователя</th>
+        </tr>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.start_time }}</td>
+            <td>{{ appointment.end_time }}</td>
+            <td>{{ appointment.user_id }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

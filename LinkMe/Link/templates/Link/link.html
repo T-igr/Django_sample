@@ -1,0 +1,94 @@
+{% extends 'base_master.html' %}
+
+{% block style %}
+        .usl-frame {
+            margin-top: 20px; /* Отступ сверху */
+            border-radius: 10px; /* Закругленные углы */
+            background-color: #f0f0f0; /* Цвет фона */
+            padding: 10px; /* Внутренние отступы */
+            box-sizing: border-box; /* Учитываем внутренние отступы в общих размерах элемента */
+            width: 350px; /* Ширина вашего usl-frame, учитывая padding */
+
+            top: 230px; /* Располагаем относительно верхнего края */
+            left: 32px; /* Располагаем относительно левого края */
+            font-family: 'Arial', sans-serif; /* выбираем шрифт */
+        }
+
+        .usl-frame h2 {
+            font-size: 20px; /* Размер шрифта для заголовка */
+            margin-bottom: 5px; /* Отступ снизу */
+        }
+
+        .usl-frame h3 {
+            font-size: 16px; /* Размер шрифта для подзаголовков */
+            margin-top: 0; /* Убираем отступ сверху */
+            margin-bottom: 10px; /* Отступ снизу */
+        }
+
+
+        .checkbox-label {
+            display: flex; /* Делаем контейнер для чекбокса display: flex; */
+            align-items: center; /* Выравниваем элементы по центру вертикально */
+        }
+
+        .checkbox-input {
+            margin-right: 5px; /* Отступ справа для разделения между чекбоксом и текстом */
+        }
+
+
+
+}
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <div class="usl-frame">
+            <h2>{{ data_pro.usl_1 }}</h2>
+            <h3>{{ data_pro.cen_1 }} руб</h3>
+            <h3>{{ data_pro.time_1 }} час</h3>
+            <input type="hidden" name="time_value_1" value="{{ data_pro.time_1 }}">
+            <label class="checkbox-label">
+                <input type="checkbox" name="selected_services_1" value="{{ data_pro.usl_1 }}" class="checkbox-input">
+                <span>Выбрать</span> <!-- Текст, который идет после чекбокса -->
+            </label>
+        </div>
+
+        <div class="usl-frame">
+            <h2>{{ data_pro.usl_2 }}</h2>
+            <h3>{{ data_pro.cen_2 }} руб</h3>
+            <h3>{{ data_pro.time_2 }} час</h3>
+            <input type="hidden" name="time_value_2" value="{{ data_pro.time_2 }}">
+            <label class="checkbox-label">
+                <input type="checkbox" name="selected_services_2" value="{{ data_pro.usl_2 }}" class="checkbox-input">
+                <span>Выбрать</span> <!-- Текст, который идет после чекбокса -->
+            </label>
+        </div>
+
+        <div class="usl-frame">
+            <h2>{{ data_pro.usl_3 }}</h2>
+            <h3>{{ data_pro.cen_3 }} руб</h3>
+            <h3>{{ data_pro.time_3 }} час</h3>
+            <input type="hidden" name="time_value_3" value="{{ data_pro.time_3 }}">
+            <input type="hidden" name="date" value="{{ today_date }}">
+            <label class="checkbox-label">
+                <input type="checkbox" name="selected_services_3" value="{{ data_pro.usl_3 }}" class="checkbox-input">
+                <span>Выбрать</span> <!-- Текст, который идет после чекбокса -->
+            </label>
+        </div>
+
+
+
+{% endblock %}
+
+
+
+{% block content_button %}
+            <button type="submit" class="button">Выбрать время</button>
+<!--            <h1>{{ today_date }}</h1>-->
+<!--            <a href="{% url 'calendar' %}?user_id={{ user_id }}" class="button">Выбрать время</a>-->
+{% endblock %}

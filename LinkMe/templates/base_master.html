@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'Link/images/favicon.ico' %}" type="image/x-icon" class="favicon">
+    <title>{{ data.title_name }}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ccc; /* серый фон */
+        }
+        .favicon {
+        width: 100px;
+        height: 100px;
+        }
+
+        .iphone-frame {
+            width: 414px; /* ширина iPhone 13 Max */
+            height: 896px; /* высота iPhone 13 Max */
+            background-color: #fff; /* белый цвет */
+            border-radius: 30px; /* закругленные углы */
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* тень */
+            position: relative; /* позиционирование для дочерних элементов */
+            overflow: hidden; /* чтобы содержимое не выходило за рамки */
+            padding: 10px; /* внутренние отступы */
+            box-sizing: border-box; /* учитываем внутренние отступы в общих размерах элемента */
+        }
+
+        .uslugi-frame {
+            width: 414px; /* ширина iPhone 13 Max */
+            height: 700px; /* высота iPhone 13 Max */
+<!--            background-color: #f0f0f0; /* светло-серый цвет */-->
+            border-radius: 30px; /* закругленные углы */
+
+            position: relative; /* позиционирование для дочерних элементов */
+            overflow: hidden; /* чтобы содержимое не выходило за рамки */
+            padding: 30px; /* внутренние отступы */
+            box-sizing: border-box; /* учитываем внутренние отступы в общих размерах элемента */
+            top: 120px; /* расположение сверху */
+            left: -10px; /* расположение слева */
+            right: 0px; /* расположение справа */
+        }
+
+        /* Рамка вокруг надписи (шапка) */
+        .name-frame {
+            position: absolute;
+            top: 0px; /* расположение сверху */
+            left: 0px; /* расположение слева */
+            right: 0px; /* расположение справа */
+            padding: 25px; /* внутренние отступы */
+            border-radius: 20px; /* радиус скругления */
+            background-color: #f0f0f0; /* светло-серый цвет */
+            box-sizing: border-box; /* чтобы padding не увеличивал ширину блока */
+            display: flex; /* чтобы разместить текст и круглую рамку внутри */
+            justify-content: space-between; /* выравниваем элементы по краям */
+            align-items: flex-start; /* вертикальное выравнивание */
+            flex-direction: column; /* меняем направление оси на вертикальное */
+        }
+
+        /* Рамка вокруг текста */
+        .text-frame {
+            position: absolute;
+            top: 40px; /* расположение сверху */
+            left: 140px; /* расположение слева */
+            right: 0px; /* расположение справа */
+            padding: 5px; /* внутренние отступы */
+            border-radius: 20px; /* радиус скругления */
+            background-color: rgba(76, 175, 80, 0); /* зеленый цвет */
+            color: #0b0b0b; /* черный цвет текста */
+            text-align: left; /* выравнивание текста по центру */
+            min-height: auto; /* автоматическая минимальная высота */
+            font-family: Arial, sans-serif; /* выбор шрифта */
+        }
+
+        /* Круглая рамка */
+        .circular-border {
+            width: 100px; /* диаметр круга */
+            height: 100px; /* диаметр круга */
+            border: 1px solid #999; /* цвет и толщина границы */
+            border-radius: 50%; /* радиус скругления (для получения круглой формы) */
+            overflow: hidden; /* чтобы изображение вписывалось в круглую рамку */
+        }
+
+        /* Стили для аватарки */
+        .avatar {
+            width: 100%; /* максимальная ширина равна диаметру круглой рамки */
+            height: 100%; /* максимальная высота равна диаметру круглой рамки */
+            object-fit: cover; /* чтобы изображение занимало всю доступную площадь */
+        }
+
+        /* Стили для первой строки в text-frame */
+        .big-text {
+            font-weight: bold; /* жирный шрифт */
+            font-size: 24px; /* крупный размер шрифта */
+            margin-bottom: 10px;
+        }
+
+        /* Стили для второй строки в text-frame */
+        .small-text {
+            font-size: 16px; /* меньший размер шрифта */
+        }
+
+        .button {
+            position: relative; /* Обязательно для работы z-index */
+            z-index: 9999; /* Устанавливаем большое значение z-index */
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px; /* задаем радиус скругления углов */
+            background-color: black; /* задаем цвет фона */
+            color: white; /* задаем цвет текста */
+            font-family: Arial, sans-serif;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+            border: none; /* убираем границу */
+            cursor: pointer; /* меняем курсор при наведении */
+            left: 230px; /* расположение слева */
+        }
+
+        .button:hover {
+            background-color: #f0f0f0;
+            color: black;
+        }
+
+        {% block style %} {% endblock %}
+
+
+    </style>
+</head>
+<body>
+    <form method="post" action="{% url 'calendar' %}">
+         {% csrf_token %}
+            <div class="iphone-frame">
+                <div class="name-frame">
+                    <div class="circular-border">
+                        <img src="{% static data.photo %}" alt="Аватар" class="avatar">
+                    </div>
+                </div>
+                <div class="text-frame">
+                    <div class="big-text">{{ data.title_name }}</div>
+                    <div class="small-text">{{ data.title_prof }}</div>
+                </div>
+                <div class="uslugi-frame">
+
+                {% block content %} {% endblock %}
+
+                </div>
+                {% block content_button %} {% endblock %}
+
+            </div>
+    </form>
+</body>
+</html>

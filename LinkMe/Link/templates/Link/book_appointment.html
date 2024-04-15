@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись на прием</title>
+</head>
+<body>
+    <h1>Запись на прием</h1>
+    <form method="post" action="{% url 'book_appointment' %}">
+        {% csrf_token %}
+        <label for="user_id">ID пользователя:</label><br>
+        <input type="text" id="user_id" name="user_id"><br>
+        <label for="full_time">Полное время (часы):</label><br>
+        <input type="number" id="full_time" name="full_time" min="1" max="4"><br>
+        <label for="date">Дата:</label><br>
+        <input type="date" id="date" name="date"><br>
+        <label for="start_time">Начальное время:</label><br>
+        <input type="time" id="start_time" name="start_time"><br>
+        <label for="end_time">Конечное время:</label><br>
+        <input type="time" id="end_time" name="end_time"><br>
+        <input type="submit" value="Записать">
+    </form>
+</body>
+</html>

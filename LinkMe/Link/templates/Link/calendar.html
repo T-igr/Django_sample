@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Календарь записи на прием</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="date"] {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .available {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .available:hover {
+            background-color: #45a049;
+        }
+        .booked {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: not-allowed;
+            border-radius: 5px;
+        }
+        .selected {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Календарь записи на прием</h1>
+
+    <form method="post" action="{% url 'calendar' %}">
+        {% csrf_token %}
+        <label for="date">Дата:</label>
+        <input type="date" id="date" name="date">
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <input type="hidden" name="full_time" value="{{ full_time }}">
+        <button type="submit">Выбрать дату</button>
+    </form>
+
+    {% if selected_date %}
+        <h2 style="text-align: center;">Выбранная дата: {{ selected_date }}</h2>
+    {% endif %}
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 49%; float: left;">
+            <h2 style="text-align: center;">Доступные интервалы:</h2>
+            <form method="post" action="{% url 'book_appointment' %}">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user_id }}">
+                <input type="hidden" name="full_time" value="{{ full_time }}">
+                <input type="hidden" name="date" value="{{ selected_date }}">
+                <label for="selected_time">Выберите время:</label>
+                <br>
+                {% for time in available_times %}
+                    <button type="submit" name="start_time" value="{{ time }}" class="available">{{ time }}</button>
+                    <br>
+                {% endfor %}
+            </form>
+        </div>
+        <div style="width: 49%; float: right;">
+            <h2 style="text-align: center;">Записи</h2>
+            <table>
+                <tr>
+                    <th>Дата</th>
+                    <th>Начальное время</th>
+                    <th>Конечное время</th>
+                    <th>ID пользователя</th>
+                </tr>
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.start_time }}</td>
+                        <td>{{ appointment.end_time }}</td>
+                        <td>{{ appointment.user_id }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">Нет доступных записей</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
